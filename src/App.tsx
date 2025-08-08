@@ -1,12 +1,13 @@
+import { Outlet } from 'react-router'
 import './App.css'
-import { Button } from './components/ui/button'
+import CustomLayouts from './layouts/CustomLayouts'
 
 function App() {
 
   return (
-    <div>
-      <Button className='text-teal-100'>Button</Button>
-    </div>
+    <CustomLayouts>
+      <Outlet/>
+    </CustomLayouts>
   )
 }
 
