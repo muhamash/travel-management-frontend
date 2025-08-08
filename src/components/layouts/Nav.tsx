@@ -25,7 +25,7 @@ const navigationLinks = [
 
 export default function Nav() {
   return (
-    <header className="border-b bg-accent-foreground">
+    <header className="border-b bg-ring">
       <div className="container mx-auto flex h-16 items-center justify-between gap-4 px-2">
         {/* Left side */}
         <div className="flex items-center gap-2">
@@ -109,10 +109,10 @@ export default function Nav() {
         {/* Right side */}
         <div className="flex items-center gap-2">
           <ModeToggle/>
-          <Button asChild variant="ghost" size="sm" className="text-sm">
+          <Button asChild variant="ghost" size="sm" className="text-sm text-muted-foreground">
             <a href="#">Sign In</a>
           </Button>
-          <Button asChild size="sm" className="text-sm">
+          <Button asChild size="sm" className="text-sm text-primary-foreground">
             <a href="#">Get Started</a>
           </Button>
         </div>

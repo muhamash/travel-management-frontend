@@ -2,14 +2,14 @@ import NavIcon from "../../assets/icons/NavIcon";
 
 export default function Footer() {
   return (
-    <footer className="bg-accent-foreground">
+    <footer className="bg-ring">
       <div className="mx-auto container space-y-8 py-16 px-4">
         <div className="flex md:flex-row flex-col items-center justify-between">
           <div className="text-teal-600 dark:text-teal-300">
             <NavIcon/>
           </div>
 
-          <ul className="mt-8 flex justify-start gap-6 sm:mt-0 sm:justify-end">
+          <ul className="mt-8 flex justify-start gap-6 sm:mt-0 sm:justify-end text-muted-foreground">
             <li>
               <a
                 href="#"
