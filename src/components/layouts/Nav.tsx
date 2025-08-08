@@ -12,15 +12,14 @@ import
     PopoverContent,
     PopoverTrigger,
   } from "@/components/ui/popover"
+import { Link } from "react-router"
 import Logo from "../../assets/icons/NavIcon"
 import { ModeToggle } from "./ThemeToggler"
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-  { href: "#", label: "Home", active: true },
-  { href: "#", label: "Features" },
-  { href: "#", label: "Pricing" },
-  { href: "#", label: "About" },
+  { href: "/", label: "Home", active: true },
+  { href: "/about", label: "About" },
 ]
 
 export default function Nav() {
@@ -70,11 +69,11 @@ export default function Nav() {
                   {navigationLinks.map((link, index) => (
                     <NavigationMenuItem key={index} className="w-full">
                       <NavigationMenuLink
-                        href={link.href}
                         className="py-1.5"
                         active={link.active}
+                        asChild
                       >
-                        {link.label}
+                        <Link to={link.href}>{link.label}</Link>
                       </NavigationMenuLink>
                     </NavigationMenuItem>
                   ))}
@@ -94,10 +93,10 @@ export default function Nav() {
                   <NavigationMenuItem key={index}>
                     <NavigationMenuLink
                       active={link.active}
-                      href={link.href}
                       className="text-muted-foreground hover:text-primary py-1.5 font-medium"
+                      asChild
                     >
-                      {link.label}
+                      <Link to={link.href}>{link.label}</Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}
@@ -110,10 +109,10 @@ export default function Nav() {
         <div className="flex items-center gap-2">
           <ModeToggle/>
           <Button asChild variant="ghost" size="sm" className="text-sm text-muted-foreground">
-            <a href="#">Sign In</a>
+            <Link to={"/login"}>Login</Link>
           </Button>
           <Button asChild size="sm" className="text-sm text-primary-foreground">
-            <a href="#">Get Started</a>
+            <Link to={"/register"}>Register</Link>
           </Button>
         </div>
       </div>

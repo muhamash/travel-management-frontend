@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router";
 import App from "../App";
-import Page from "../pages/about/Page";
+import ABoutPage from "../pages/about/Page";
+import LoginPage from "../pages/login/page";
+import NotFoundPage from "../pages/notFound/page";
 
 export const appRouter = createBrowserRouter( [
     {
@@ -8,11 +10,19 @@ export const appRouter = createBrowserRouter( [
         path: "/",
         children: [
             {
-                Component: Page,
+                Component: ABoutPage,
                 path: "/about"
             }
         ]
     },
+    {
+        Component: LoginPage,
+        path: "/login",
+    },
+    {
+        Component: NotFoundPage,
+        path: "*"
+    }
     // {
     //     Component: AdminLayouts,
     //     path: '/admin',
