@@ -2,7 +2,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
-import { GalleryVerticalEnd } from "lucide-react"
+import { Link } from "react-router"
+import NavIcon from "../../assets/icons/NavIcon"
 
 export function LoginForm({
   className,
@@ -18,16 +19,14 @@ export function LoginForm({
               className="flex flex-col items-center gap-2 font-medium"
             >
               <div className="flex size-8 items-center justify-center rounded-md">
-                <GalleryVerticalEnd className="size-6" />
+                <NavIcon/>
               </div>
-              <span className="sr-only">Acme Inc.</span>
+              <span className="sr-only">Travel Inc.</span>
             </a>
-            <h1 className="text-xl md:text-4xl font-bold text-muted-foreground">Welcome to Acme Inc.</h1>
+            <h1 className="text-xl md:text-4xl font-bold text-muted-foreground">Welcome to Travel Inc.</h1>
             <div className="text-center text-md md:text-xl text-muted-foreground">
               Don&apos;t have an account?{" "}
-              <a href="#" className="underline underline-offset-4 text-red-700 font-bold bg-background px-3 py-2 rounded-md">
-                Sign up
-              </a>
+              <Link className="underline underline-offset-4 text-red-700 font-bold bg-background px-3 py-2 rounded-md" to={"/register"}>Sign up</Link>
             </div>
           </div>
           <div className="flex flex-col gap-6">

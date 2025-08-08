@@ -3,6 +3,7 @@ import App from "../App";
 import ABoutPage from "../pages/about/Page";
 import LoginPage from "../pages/login/page";
 import NotFoundPage from "../pages/notFound/page";
+import RegisterPage from "../pages/register/page";
 
 export const appRouter = createBrowserRouter( [
     {
@@ -18,6 +19,10 @@ export const appRouter = createBrowserRouter( [
     {
         Component: LoginPage,
         path: "/login",
+    },
+    {
+        Component: RegisterPage,
+        path: "/register",
     },
     {
         Component: NotFoundPage,
