@@ -13,6 +13,7 @@ import
     PopoverTrigger,
   } from "@/components/ui/popover"
 import Logo from "../../assets/icons/NavIcon"
+import { ModeToggle } from "./ThemeToggler"
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -24,8 +25,8 @@ const navigationLinks = [
 
 export default function Nav() {
   return (
-    <header className="border-b px-4 md:px-6">
-      <div className="flex h-16 items-center justify-between gap-4">
+    <header className="border-b bg-accent-foreground">
+      <div className="container mx-auto flex h-16 items-center justify-between gap-4 px-2">
         {/* Left side */}
         <div className="flex items-center gap-2">
           {/* Mobile menu trigger */}
@@ -104,8 +105,10 @@ export default function Nav() {
             </NavigationMenu>
           </div>
         </div>
+
         {/* Right side */}
         <div className="flex items-center gap-2">
+          <ModeToggle/>
           <Button asChild variant="ghost" size="sm" className="text-sm">
             <a href="#">Sign In</a>
           </Button>

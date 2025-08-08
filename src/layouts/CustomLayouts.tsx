@@ -10,9 +10,11 @@ interface ICustomLayouts
 const CustomLayouts = ( { children }: ICustomLayouts ) =>
 {
     return (
-        <div>
+        <div className="min-h-screen flex flex-col">
             <Nav />
-            {children}
+            <div className="grow-1">
+                {children}
+            </div>
             <Footer/>
         </div>
     );
