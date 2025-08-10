@@ -2,7 +2,7 @@ import type { BaseQueryFn } from '@reduxjs/toolkit/query';
 import type { AxiosError, AxiosRequestConfig } from 'axios';
 import { axiosInstance } from '../lib/axios';
 
-const axiosBaseQuery =
+export const axiosBaseQuery =
     (
         // { baseUrl }: { baseUrl: string } = { baseUrl: '' },
     ): BaseQueryFn<

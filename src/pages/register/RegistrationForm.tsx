@@ -2,8 +2,10 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { SquareCheckBig, XCircle } from "lucide-react";
 import { useForm, type FieldValue, type SubmitHandler } from "react-hook-form";
 import { Link } from "react-router";
+import { toast } from "sonner";
 import { z } from "zod";
 import
     {
@@ -16,6 +18,7 @@ import
         FormMessage,
     } from "../../components/ui/form";
 import { Input } from "../../components/ui/input";
+import { useRegisterMutation } from "../../redux/features/api/auth/auth.api";
  
 const formSchema = z.object( {
     name: z.string().min( 2 ).max( 50 ),
@@ -30,7 +33,10 @@ const formSchema = z.object( {
 export function RegistrationForm({
   className,
   ...props
-}: React.ComponentProps<"form">) {
+}: React.ComponentProps<"form"> )
+{
+    const [registerUser, { isLoading, error }] = useRegisterMutation();
+
     const form = useForm<z.infer<typeof formSchema>>( {
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -41,8 +47,56 @@ export function RegistrationForm({
         },
     } );
 
-    const onSubmit: SubmitHandler<FieldValue> = ( data: z.infer<typeof formSchema> ) =>
+    const onSubmit: SubmitHandler<FieldValue> = async ( data: z.infer<typeof formSchema> ) =>
     {
+        try
+        {
+            const result = await registerUser( data ).unwrap();
+            console.log( result, { isLoading, error }, toast )
+            toast.success( "Registered successfully!!", {
+                description: "Welcome aboard! You can now log in to your account.",
+                icon: <SquareCheckBig className="text-yellow-500" />,
+                style: {
+                    background: "rgba(30, 73, 34, 0.532)", // semi-transparent white
+                    backdropFilter: "blur(12px) saturate(180%)", // glass effect
+                    WebkitBackdropFilter: "blur(12px) saturate(180%)",
+                    border: "1px solid rgba(8, 67, 94, 0.25)",
+                    color: "#ffffff",
+                    borderRadius: "16px",
+                    padding: "14px 18px",
+                    fontWeight: "500",
+                    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.15)",
+                },
+                icon: "🎉",
+                duration: 4000,
+            } );
+        }
+        catch ( error: unknown )
+        {
+            toast.error( error?.data?.message || "Registration failed", {
+                description: "Please check your details and try again.",
+                icon: <XCircle className="text-red-500" />,
+                // unstyled: true,
+                // classNames: {
+                //     description: "text-white",
+                // },
+                style: {
+                    background: "rgba(255, 0, 212, 0.15)", // semi-transparent white
+                    backdropFilter: "blur(12px) saturate(180%)", // glass effect
+                    WebkitBackdropFilter: "blur(12px) saturate(180%)",
+                    border: "1px solid #fca5a5",
+                    color: "#6c0505",
+                    borderRadius: "12px",
+                    padding: "14px 18px",
+                    fontWeight: "500",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+                },
+                duration: 4500,
+            } );
+            
+            console.log( error )
+        }
+
         console.log( data );
     };
 

@@ -1,5 +1,5 @@
 import NavIcon from "../../assets/icons/NavIcon";
-import { RegistrationForm } from "./RegistrationPage";
+import { RegistrationForm } from "./RegistrationForm";
 
 export default function RegistrationPage() {
     return (
