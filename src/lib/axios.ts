@@ -1,7 +1,8 @@
 import axios from "axios";
+import { envString } from "./envString";
 
 export const axiosInstance = axios.create( {
-    baseURL: "",
+    baseURL: envString.baseUrl,
     timeout: 10000,
     headers: { "X-Custom-Header": "test" }
 } );
@@ -10,6 +11,7 @@ export const axiosInstance = axios.create( {
 axiosInstance.interceptors.request.use( function ( config )
 {
     // Do something before request is sent
+    console.log(config)
     return config;
 }, function ( error )
 {
@@ -24,6 +26,7 @@ axiosInstance.interceptors.response.use( function onFulfilled ( response )
 {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
+    console.log(response)
     return response;
 }, function onRejected ( error )
 {

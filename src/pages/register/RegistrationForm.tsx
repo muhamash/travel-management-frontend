@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SquareCheckBig, XCircle } from "lucide-react";
 import { useForm, type FieldValue, type SubmitHandler } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { z } from "zod";
 import
@@ -35,7 +35,8 @@ export function RegistrationForm({
   ...props
 }: React.ComponentProps<"form"> )
 {
-    const [registerUser, { isLoading, error }] = useRegisterMutation();
+    const [ registerUser, { isLoading, error } ] = useRegisterMutation();
+    const navigate = useNavigate();
 
     const form = useForm<z.infer<typeof formSchema>>( {
         resolver: zodResolver(formSchema),
@@ -52,7 +53,9 @@ export function RegistrationForm({
         try
         {
             const result = await registerUser( data ).unwrap();
-            console.log( result, { isLoading, error }, toast )
+            console.log( result, { isLoading, error } );
+            navigate("/login")
+            
             toast.success( "Registered successfully!!", {
                 description: "Welcome aboard! You can now log in to your account.",
                 icon: <SquareCheckBig className="text-yellow-500" />,
@@ -67,7 +70,6 @@ export function RegistrationForm({
                     fontWeight: "500",
                     boxShadow: "0 8px 32px rgba(0, 0, 0, 0.15)",
                 },
-                icon: "🎉",
                 duration: 4000,
             } );
         }

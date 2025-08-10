@@ -18,6 +18,7 @@ export const axiosBaseQuery =
     > =>
         async ( { url, method, data, params, headers } ) =>
         {
+            console.log(url, method)
             try
             {
                 const result = await axiosInstance( {
