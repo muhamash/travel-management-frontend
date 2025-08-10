@@ -6,6 +6,7 @@ import { useForm, type FieldValue, type SubmitErrorHandler } from "react-hook-fo
 import { Link, useNavigate } from "react-router";
 import z from "zod";
 import NavIcon from "../../assets/icons/NavIcon";
+import { useCustomToast } from "../../components/layouts/MyToast";
 import
   {
     Form,
@@ -39,13 +40,14 @@ export function LoginForm({
 
   const [ loginUser, { isLoading, error } ] = useLoginMutation();
   const navigate = useNavigate();
+  const { showToast } = useCustomToast();
 
   const onSubmit: SubmitErrorHandler<FieldValue> = async ( data: z.infer<typeof loginSchema> )=>{
     console.log( data );
 
     try
     {
-      const result = await loginUser().unwrap();
+      const result = await loginUser(data).unwrap();
       console.log( result, { isLoading, error } );
 
       if ( !result?.data?.isVerified && !result?.data?.isBlocked )
@@ -57,44 +59,16 @@ export function LoginForm({
         navigate("/")
       }
 
-      toast.success( "Registered successfully!!", {
-        description: "Welcome aboard! You can now log in to your account.",
-        icon: <SquareCheckBig className="text-yellow-500" />,
-        style: {
-          background: "rgba(30, 73, 34, 0.532)", // semi-transparent white
-          backdropFilter: "blur(12px) saturate(180%)", // glass effect
-          WebkitBackdropFilter: "blur(12px) saturate(180%)",
-          border: "1px solid rgba(8, 67, 94, 0.25)",
-          color: "#ffffff",
-          borderRadius: "16px",
-          padding: "14px 18px",
-          fontWeight: "500",
-          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.15)",
-        },
-        duration: 4000,
-      } );
+      showToast( {
+        message: result?.message || "Welcome bro",
+        type: "success",
+      });
     }
     catch ( error )
     {
-      toast.error( error?.data?.message || "Login failed", {
-        description: "Please check your details and try again.",
-        icon: <XCircle className="text-red-500" />,
-        // unstyled: true,
-        // classNames: {
-        //     description: "text-white",
-        // },
-        style: {
-          background: "rgba(255, 0, 212, 0.15)", // semi-transparent white
-          backdropFilter: "blur(12px) saturate(180%)", // glass effect
-          WebkitBackdropFilter: "blur(12px) saturate(180%)",
-          border: "1px solid #fca5a5",
-          color: "#6c0505",
-          borderRadius: "12px",
-          padding: "14px 18px",
-          fontWeight: "500",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-        },
-        duration: 4500,
+      showToast( {
+        message: error?.data?.message,
+        type: "error",
       } );
 
       console.log(error)
