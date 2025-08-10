@@ -54,10 +54,10 @@ export function RegistrationForm({
         {
             const result = await registerUser( data ).unwrap();
             console.log( result, { isLoading, error } );
-            navigate("/login")
+
+            navigate("/verify", {state: result?.data?.email})
             
-            toast.success( "Registered successfully!!", {
-                description: "Welcome aboard! You can now log in to your account.",
+            toast.success( `Registered successful : ${result?.message}`, {
                 icon: <SquareCheckBig className="text-yellow-500" />,
                 style: {
                     background: "rgba(30, 73, 34, 0.532)", // semi-transparent white
