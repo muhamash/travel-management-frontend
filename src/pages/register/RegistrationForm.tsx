@@ -2,11 +2,10 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SquareCheckBig, XCircle } from "lucide-react";
 import { useForm, type FieldValue, type SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
-import { toast } from "sonner";
 import { z } from "zod";
+import { useCustomToast } from "../../components/layouts/MyToast";
 import
     {
         Form,
@@ -37,6 +36,7 @@ export function RegistrationForm({
 {
     const [ registerUser, { isLoading, error } ] = useRegisterMutation();
     const navigate = useNavigate();
+    const { showToast } = useCustomToast();
 
     const form = useForm<z.infer<typeof formSchema>>( {
         resolver: zodResolver(formSchema),
@@ -57,44 +57,17 @@ export function RegistrationForm({
 
             navigate("/verify", {state: result?.data?.email})
             
-            toast.success( `Registered successful : ${result?.message}`, {
-                icon: <SquareCheckBig className="text-yellow-500" />,
-                style: {
-                    background: "rgba(30, 73, 34, 0.532)", // semi-transparent white
-                    backdropFilter: "blur(12px) saturate(180%)", // glass effect
-                    WebkitBackdropFilter: "blur(12px) saturate(180%)",
-                    border: "1px solid rgba(8, 67, 94, 0.25)",
-                    color: "#ffffff",
-                    borderRadius: "16px",
-                    padding: "14px 18px",
-                    fontWeight: "500",
-                    boxShadow: "0 8px 32px rgba(0, 0, 0, 0.15)",
-                },
-                duration: 4000,
-            } );
+            showToast( {
+                type: "info",
+                message: `${result.message}; Please verify your account!` 
+            })
         }
         catch ( error: unknown )
         {
-            toast.error( error?.data?.message || "Registration failed", {
-                description: "Please check your details and try again.",
-                icon: <XCircle className="text-red-500" />,
-                // unstyled: true,
-                // classNames: {
-                //     description: "text-white",
-                // },
-                style: {
-                    background: "rgba(255, 0, 212, 0.15)", // semi-transparent white
-                    backdropFilter: "blur(12px) saturate(180%)", // glass effect
-                    WebkitBackdropFilter: "blur(12px) saturate(180%)",
-                    border: "1px solid #fca5a5",
-                    color: "#6c0505",
-                    borderRadius: "12px",
-                    padding: "14px 18px",
-                    fontWeight: "500",
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-                },
-                duration: 4500,
-            } );
+            showToast( {
+                type: "error",
+                message: error?.data?.message || error?.message || "Error in Registration"
+            })
             
             console.log( error )
         }

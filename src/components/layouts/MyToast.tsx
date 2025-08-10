@@ -1,9 +1,10 @@
 import
     {
-        Camera,
-        CheckCircle,
+        SquareActivityIcon,
+        SquareCheckBig,
         TriangleAlert,
         XCircle,
+        XIcon
     } from "lucide-react";
 import React from "react";
 import { toast } from "sonner";
@@ -19,11 +20,11 @@ interface CustomToastOptions {
 
 export function useCustomToast() {
   const iconByType: Record<ToastType, React.ReactNode> = {
-    success: <CheckCircle className="text-white" size={24} />,
+    success: <SquareCheckBig className="text-white" size={24} />,
     warning: <TriangleAlert className="text-white" size={24} />,
     error: <XCircle className="text-white" size={24} />,
-    info: <Camera className="text-white" size={24} />,
-    danger: <Camera className="text-white" size={24} />,
+    info: <SquareActivityIcon className="text-white" size={24} />,
+    danger: <XIcon className="text-white" size={24} />,
   };
 
     const gradientGlassStyle = ( type: ToastType ): React.CSSProperties =>
