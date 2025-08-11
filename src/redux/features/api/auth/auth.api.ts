@@ -17,7 +17,7 @@ const authApi = baseApi.injectEndpoints( {
                 data: userInfo
             } )
         } ),
-        sendOtp: builder.mutation( {
+        sendOtp: builder.mutation<null, { email: string }>( {
             query: ( userInfo ) => ( {
                 url: "/otp/send",
                 method: "POST",
