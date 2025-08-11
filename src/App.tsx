@@ -6,7 +6,7 @@ import { ThemeProvider } from './providers/ThemeProvider';
 function App() {
 
   return (
-    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+    <ThemeProvider storageKey="vite-ui-theme">
       <CustomLayouts>
         <Outlet />
       </CustomLayouts>
