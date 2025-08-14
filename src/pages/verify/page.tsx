@@ -10,6 +10,7 @@ import
 import { CheckCircle2, XCircleIcon } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
+import { useCustomToast } from "../../components/layouts/MyToast";
 import { Button } from "../../components/ui/button";
 import OtpForm from "./otpForm";
 
@@ -24,15 +25,66 @@ const MESSAGES = {
 export default function VerifyPage() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { showToast, updateToast } = useCustomToast(); 
 
   const [otpSent, setOtpSent] = useState(false);
   const [verified, setVerified] = useState(false);
 
-  useEffect(() => {
+  useEffect( () =>
+  {
     // if (!location.state) navigate("/");
-  }, [location.state, navigate]);
+    
+    if ( otpSent )
+    {
+      const handleBeforeUnload = ( e: BeforeUnloadEvent ) =>
+      {
+        e.preventDefault();
+        e.returnValue = ""; // This triggers the browser's "Are you sure?" dialog
+      };
 
-  const handleSendOtp = useCallback( () => setOtpSent( true ), [] );
+      window.addEventListener( "beforeunload", handleBeforeUnload );
+
+      return () => window.removeEventListener( "beforeunload", handleBeforeUnload );
+    }
+  }, [ location.state, navigate ] );
+
+  const handleSendOtp = useCallback( async () =>
+  {
+
+    try
+    {
+      // Show loading toast and store the ID so we can update it later
+     const toastId = showToast( {
+        type: "loading",
+        message: "Sending OTP...",
+        autoClose: false, // prevent it from disappearing automatically
+      } );
+
+      // Simulate OTP send delay
+      await new Promise( ( resolve ) => setTimeout( resolve, 3000 ) );
+
+      // Update toast to success
+      updateToast( toastId, {
+        // update existing toast
+        type: "success",
+        message: "OTP Sent Successfully",
+      } );
+
+      localStorage.setItem( "otpSent", "true" );
+      setOtpSent( true );
+    } catch ( err )
+    {
+      // Update toast to error
+      showToast( {
+        // id: toastId,
+        type: "error",
+        message: `Something went wrong: ${ ( err as Error ).message }`,
+      } );
+
+      localStorage.setItem( "otpSent", "false" );
+      setOtpSent( false );
+    }
+  }, [ showToast ] );
   
   const handleOtpSuccess = useCallback(() => setVerified(true), []);
   const handleContinue = useCallback(() => navigate("/"), [navigate]);
