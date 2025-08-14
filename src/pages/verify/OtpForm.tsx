@@ -22,7 +22,7 @@ export default function OtpForm ()
 
     const onSubmit = async ( data: FieldValues ) =>
     {
-        console.log(data)
+        console.log( data );
     }
 
     return (
