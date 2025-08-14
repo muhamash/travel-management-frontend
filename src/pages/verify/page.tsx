@@ -28,15 +28,14 @@ export default function VerifyPage() {
   const [otpSent, setOtpSent] = useState(false);
   const [verified, setVerified] = useState(false);
 
-  // Ensure user has location state (security)
   useEffect(() => {
-    if (!location.state) navigate("/");
+    // if (!location.state) navigate("/");
   }, [location.state, navigate]);
 
   const handleSendOtp = useCallback( () => setOtpSent( true ), [] );
   
   const handleOtpSuccess = useCallback(() => setVerified(true), []);
-  const handleContinue = useCallback(() => navigate("/dashboard"), [navigate]);
+  const handleContinue = useCallback(() => navigate("/"), [navigate]);
 
   // Step 1: Initial confirmation
   const renderInitialStep = () => (
@@ -50,7 +49,7 @@ export default function VerifyPage() {
         </span>
       </p>
       <Button
-        className="bg-green-500 hover:bg-green-600 text-white"
+        className="bg-green-500 hover:bg-green-600 text-white cursor-pointer"
         onClick={handleSendOtp}
       >
         Yes, send it!
