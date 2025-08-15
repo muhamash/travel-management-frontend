@@ -27,7 +27,7 @@ console.log( data.navMain );
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
-      <SidebarHeader className="flex w-full flex-col bg-chart-3">
+      <SidebarHeader className="flex w-full flex-col bg-accent">
         <NavIcon />
       </SidebarHeader>
       <SidebarContent className="bg-ring">

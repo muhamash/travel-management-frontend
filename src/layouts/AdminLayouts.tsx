@@ -6,6 +6,7 @@ import
         SidebarTrigger,
     } from "@/components/ui/sidebar";
 import { Outlet } from "react-router";
+import { ModeToggle } from "../components/layouts/ThemeToggler";
 
 export default function DashboardLayout ()
 {
@@ -14,7 +15,7 @@ export default function DashboardLayout ()
         <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
-                <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 bg-chart-3">
+                <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 bg-accent justify-between">
                     <SidebarTrigger className="-ml-1" />
                     {/* <Separator
                         orientation="vertical"
@@ -36,9 +37,10 @@ export default function DashboardLayout ()
                         </BreadcrumbList>
                     </Breadcrumb> */}
 
+                    <ModeToggle />
                 </header>
-                <div className="flex flex-1 flex-col gap-4 p-4 bg-sidebar-border ">
-                    <Outlet/>
+                <div className="flex flex-1 flex-col gap-4 p-4 bg-ring ">
+                    <Outlet />
                 </div>
 
             </SidebarInset>
