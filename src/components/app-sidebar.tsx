@@ -1,6 +1,5 @@
 import * as React from "react"
 
-import { SearchForm } from "@/components/search-form"
 import
   {
     Sidebar,
@@ -14,7 +13,8 @@ import
     SidebarMenuItem,
     SidebarRail,
   } from "@/components/ui/sidebar"
-import { VersionSwitcher } from "@/components/version-switcher"
+import { Link } from "react-router"
+import NavIcon from "../assets/icons/NavIcon"
 
 // This is sample data.
 const data = {
@@ -25,8 +25,8 @@ const data = {
       url: "#",
       items: [
         {
-          title: "Installation",
-          url: "#",
+          title: "Analytics",
+          url: "/admin/analytics",
         },
         {
           title: "Project Structure",
@@ -55,14 +55,10 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
-      <SidebarHeader>
-        <VersionSwitcher
-          versions={data.versions}
-          defaultVersion={data.versions[0]}
-        />
-        <SearchForm />
+      <SidebarHeader className="flex w-full flex-col bg-chart-3">
+        <NavIcon />
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="bg-ring">
         {/* We create a SidebarGroup for each parent. */}
         {data.navMain.map((item) => (
           <SidebarGroup key={item.title}>
@@ -72,7 +68,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 {item.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild isActive={item.isActive}>
-                      <a href={item.url}>{item.title}</a>
+                      <Link className="text-muted-foreground" to={item.url}>{item.title}</Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}
