@@ -1,7 +1,7 @@
 
 export default function BookingDetailsPage() {
   return (
-    <div>
+    <div className="text-muted-foreground">
       booking details
     </div>
   )

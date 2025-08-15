@@ -64,7 +64,7 @@ export default function Nav() {
             <PopoverContent align="start" className="w-36 p-1 md:hidden">
               <NavigationMenu className="max-w-none *:w-full">
                 <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
-                  {filteredLinks.map((link, index) => (
+                  {filteredLinks.map( ( link, index ) => (
                     <NavigationMenuItem key={index} className="w-full">
                       <NavigationMenuLink
                         className="py-1.5"
@@ -74,7 +74,7 @@ export default function Nav() {
                         <Link to={link.href}>{link.label}</Link>
                       </NavigationMenuLink>
                     </NavigationMenuItem>
-                  ))}
+                  ) )}
                 </NavigationMenuList>
               </NavigationMenu>
             </PopoverContent>
@@ -87,7 +87,7 @@ export default function Nav() {
             </a>
             <NavigationMenu className="max-md:hidden">
               <NavigationMenuList className="gap-2">
-                {filteredLinks.map((link, index) => (
+                {filteredLinks.map( ( link, index ) => (
                   <NavigationMenuItem key={index}>
                     <NavigationMenuLink
                       active={location.pathname === link.href}
@@ -97,7 +97,7 @@ export default function Nav() {
                       <Link to={link.href}>{link.label}</Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
-                ))}
+                ) )}
               </NavigationMenuList>
             </NavigationMenu>
           </div>
@@ -107,22 +107,28 @@ export default function Nav() {
         <div className="flex items-center gap-2">
           <ModeToggle />
           {data ? (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-sm text-muted-foreground"
-              onClick={handleLogout}
-            >
-              Logout
-            </Button>
+            <>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-sm text-muted-foreground"
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+              <Button>
+                {data?.data?.name}
+              </Button>
+            </>
           ) : (
-            <Button asChild variant="ghost" size="sm" className="text-sm text-muted-foreground">
-              <Link to="/login">Login</Link>
-            </Button>
+            <>
+              <Button asChild variant="ghost" size="sm" className="text-sm text-muted-foreground">
+                <Link to="/login">Login</Link>
+              </Button>
+              <Button asChild size="sm" className="text-sm text-primary-foreground">
+                <Link to="/register">Register</Link>
+              </Button></>
           )}
-          <Button asChild size="sm" className="text-sm text-primary-foreground">
-            <Link to="/register">Register</Link>
-          </Button>
         </div>
       </div>
     </header>

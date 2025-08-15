@@ -1,7 +1,7 @@
 
 export default function BookingPage() {
   return (
-    <div>
+    <div className="text-muted-foreground">
       hello
     </div>
   )

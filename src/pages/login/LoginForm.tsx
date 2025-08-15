@@ -97,8 +97,8 @@ export function LoginForm({
               </a>
               <h1 className="text-xl text-center md:text-4xl font-bold text-muted-foreground">Welcome to Travel Inc.</h1>
               <div className="text-center text-sm md:text-md text-muted-foreground">
-                Don&apos;t have an account?{" "}
-                <Link className="underline underline-offset-4 text-red-700 font-bold bg-background px-3 py-2 rounded-md" to={"/register"}>Sign up</Link>
+                 Have an account?{" "}
+                <Link className="underline underline-offset-4 text-red-700 font-bold bg-background px-3 py-2 rounded-md" to={"/register"}>Login</Link>
               </div>
             </div>
 

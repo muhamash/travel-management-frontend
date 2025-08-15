@@ -1,7 +1,7 @@
 
 export default function AnalyticsPage() {
   return (
-    <div>
+    <div className="text-muted-foreground">
       Analytics page
     </div>
   )
