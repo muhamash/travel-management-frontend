@@ -145,7 +145,7 @@ export default function VerifyPage() {
               <Button
                 form="otp-form"
                 type="submit"
-                className="bg-violet-500 hover:bg-violet-600 text-white shadow-lg"
+                className="bg-violet-500 hover:bg-violet-600 text-white shadow-lg cursor-pointer"
               >
                 Submit
               </Button>
@@ -153,7 +153,7 @@ export default function VerifyPage() {
                 variant="outline"
                 disabled={timer > 0}
                 onClick={handleSendOtp}
-                className={`cursor-pointer ${timer > 0 ? "bg-black text-slate-300" : "bg-pink-800 text-white"}`}
+                className={`${timer > 0 ? "bg-black text-slate-300 cursor-progress" : "bg-pink-800 text-white cursor-pointer "}`}
               >
                 {timer > 0 ? `Resend in ${ formatTime( timer ) }` : "Resend OTP"}
               </Button>
