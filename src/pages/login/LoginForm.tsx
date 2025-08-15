@@ -146,7 +146,9 @@ export function LoginForm({
               </span>
             </div>
             <div className="">
-              <Button variant="outline" type="button" className="w-full text-muted-foreground cursor-pointer">
+              <Button onClick={
+                ()=> window.open(`http://localhost:3000/api/v1/auth/google`)
+              } variant="outline" type="button" className="w-full text-muted-foreground cursor-pointer">
                 Continue with Google
               </Button>
 

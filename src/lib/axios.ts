@@ -2,9 +2,10 @@ import axios from "axios";
 import { envString } from "./envString";
 
 export const axiosInstance = axios.create( {
-    baseURL: envString.baseUrl,
+    baseURL: envString.baseUrl || "http://localhost:3000/api/v1",
     timeout: 10000,
-    headers: { "X-Custom-Header": "test" }
+    headers: { "X-Custom-Header": "test" , "Authorization": "ei token er kono kaj nai!!"},
+    withCredentials: true
 } );
 
 // Add a request interceptor

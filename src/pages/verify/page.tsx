@@ -14,14 +14,14 @@ import { useCustomToast } from "../../components/layouts/MyToast";
 import { Button } from "../../components/ui/button";
 import OtpForm from "./otpForm";
 
+const RESEND_DELAY = 10; 
+
 const MESSAGES = {
   notVerified: "You are not verified!",
   otpPrompt: "Let’s verify who you are!",
   otpHint: "Please enter the OTP sent to your email",
   success: "Verification Successful!"
 };
-
-const RESEND_DELAY = 10; 
 
 const formatTime = (seconds: number) => {
   const m = Math.floor(seconds / 60);

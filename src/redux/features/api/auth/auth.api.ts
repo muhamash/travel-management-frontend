@@ -1,6 +1,6 @@
 import { baseApi } from "../../../baseApi";
 
-const authApi = baseApi.injectEndpoints( {
+export const authApi = baseApi.injectEndpoints( {
     endpoints: ( builder ) => ( {
         register: builder.mutation( {
             query: ( userInfo ) => ( {
@@ -16,14 +16,30 @@ const authApi = baseApi.injectEndpoints( {
                 data: userInfo
             } )
         } ),
+        logout: builder.mutation( {
+            query: () => ( {
+                url: "/auth/logout",
+                method: "POST",
+            } ),
+            invalidatesTags: ["USER"]
+        } ),
         sendOtp: builder.mutation<null, { email: string }>( {
             query: ( userInfo ) => ( {
                 url: "/otp/send",
                 method: "POST",
                 data: userInfo
             } )
+        } ),
+        userData: builder.query( {
+            query: () =>
+            ( {
+                url: "/user/getMe",
+                method: "GET",
+                        
+            } ),
+            providesTags: ["USER"]
         } )
     } )
 } );
 
-export const { useRegisterMutation, useLoginMutation, useSendOtpMutation } = authApi;
+export const { useRegisterMutation, useLoginMutation, useSendOtpMutation, useUserDataQuery, useLogoutMutation } = authApi;
