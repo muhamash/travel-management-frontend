@@ -87,7 +87,7 @@ export default function Nav ()
             <PopoverContent align="start" className="w-36 p-1 md:hidden">
               <NavigationMenu className="max-w-none *:w-full">
                 <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
-                  {navigationLinks.map((link, index) => (
+                  {navigationLinks.map( ( link, index ) => (
                     <NavigationMenuItem key={index} className="w-full">
                       <NavigationMenuLink
                         className="py-1.5"
@@ -97,7 +97,7 @@ export default function Nav ()
                         <Link to={link.href}>{link.label}</Link>
                       </NavigationMenuLink>
                     </NavigationMenuItem>
-                  ))}
+                  ) )}
                 </NavigationMenuList>
               </NavigationMenu>
             </PopoverContent>
@@ -110,17 +110,36 @@ export default function Nav ()
             {/* Navigation menu */}
             <NavigationMenu className="max-md:hidden">
               <NavigationMenuList className="gap-2">
-                {navigationLinks.map((link, index) => (
-                  <NavigationMenuItem key={index}>
-                    <NavigationMenuLink
-                      active={link.active}
-                      className="text-muted-foreground hover:text-primary py-1.5 font-medium"
-                      asChild
-                    >
-                      <Link to={link.href}>{link.label}</Link>
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
-                ))}
+                {navigationLinks.map( ( link, index ) => (
+                  <>
+                    {
+                      link.role === "PUBLIC" && (
+                        <NavigationMenuItem key={index}>
+                          <NavigationMenuLink
+                            active={link.active}
+                            className="text-muted-foreground hover:text-primary py-1.5 font-medium"
+                            asChild
+                          >
+                            <Link to={link.href}>{link.label}</Link>
+                          </NavigationMenuLink>
+                        </NavigationMenuItem>
+                      )
+                    }
+                    {
+                      link.role === data?.data?.role && (
+                        <NavigationMenuItem key={index}>
+                          <NavigationMenuLink
+                            active={link.active}
+                            className="text-muted-foreground hover:text-primary py-1.5 font-medium"
+                            asChild
+                          >
+                            <Link to={link.href}>{link.label}</Link>
+                          </NavigationMenuLink>
+                        </NavigationMenuItem>
+                      )
+                    }
+                  </>
+                ) )}
               </NavigationMenuList>
             </NavigationMenu>
           </div>
@@ -128,12 +147,12 @@ export default function Nav ()
 
         {/* Right side */}
         <div className="flex items-center gap-2">
-          <ModeToggle/>
+          <ModeToggle />
           <Button asChild variant="ghost" size="sm" className="text-sm text-muted-foreground">
             {
               data ? (
-              <Link onClick={handleLogout}>Logout</Link>
-              ): (
+                <Link onClick={handleLogout}>Logout</Link>
+              ) : (
                 <Link to={"/login"}>Login</Link>
               )
             }
@@ -144,5 +163,5 @@ export default function Nav ()
         </div>
       </div>
     </header>
-  )
+  );
 }

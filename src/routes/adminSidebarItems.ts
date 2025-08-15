@@ -1,3 +1,4 @@
+import AddTourPage from "../pages/addTour/page";
 import AnalyticsPage from "../pages/analytics/page";
 
 export const adminSidebarItem = [
@@ -18,11 +19,8 @@ export const adminSidebarItem = [
         items: [
             {
                 title: "Add tour",
-                url: "#",
-            },
-            {
-                title: "Add tour type",
-                url: "#",
+                url: "/admin/add-tour",
+                component: AddTourPage
             },
         ],
     },

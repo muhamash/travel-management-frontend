@@ -1,6 +1,8 @@
 
 
 import AnalyticsPage from "../pages/analytics/page";
+import BookingPage from "../pages/booking/page";
+import BookingDetailsPage from "../pages/bookingDetails/page";
 
 export const userSidebarItem = [
     {
@@ -9,7 +11,7 @@ export const userSidebarItem = [
         items: [
             {
                 title: "Analytics",
-                url: "/admin/analytics",
+                url: "/user/analytics",
                 component: AnalyticsPage,
             },
         ],
@@ -19,12 +21,14 @@ export const userSidebarItem = [
         url: "#",
         items: [
             {
-                title: "Add tour",
-                url: "#",
+                title: "Book a travel slot",
+                url: "/user/booking",
+                component: BookingPage
             },
             {
-                title: "Add tour type",
-                url: "#",
+                title: "See booking details",
+                url: "/user/booking-details",
+                component: BookingDetailsPage
             },
         ],
     },

@@ -1,4 +1,5 @@
-import { createBrowserRouter } from "react-router";
+import React from "react";
+import { createBrowserRouter, Navigate } from "react-router";
 import App from "../App";
 import DashboardLayout from "../layouts/AdminLayouts";
 import ABoutPage from "../pages/about/Page";
@@ -25,14 +26,18 @@ export const appRouter = createBrowserRouter( [
         Component: DashboardLayout,
         path: "/admin",
         children: [
-            ...generateRoutes(adminSidebarItem)
+            {
+                index: true,
+                element: React.createElement( Navigate, { to: "/admin/analytics" } ),
+            },
+            ...generateRoutes( adminSidebarItem )
         ]
     },
     {
         Component: DashboardLayout,
         path: "/user",
         children: [
-            ...generateRoutes(userSidebarItem)
+            ...generateRoutes( userSidebarItem )
         ]
     },
     {
@@ -51,15 +56,4 @@ export const appRouter = createBrowserRouter( [
         Component: NotFoundPage,
         path: "*"
     }
-    // {
-    //     Component: AdminLayouts,
-    //     path: '/admin',
-    //     children:
-    //         [
-    //             {
-    //                 Component: page,
-    //                 path: "/admin/analytics"
-    //             }
-    //         ]
-    // }
 ] );
