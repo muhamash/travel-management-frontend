@@ -20,8 +20,10 @@ import { ModeToggle } from "./ThemeToggler"
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-  { href: "/", label: "Home", active: true },
-  { href: "/about", label: "About" },
+  { href: "/", label: "Home", active: true, role: "PUBLIC" },
+  { href: "/about", label: "About",  role: "PUBLIC" },
+  { href: "/admin", label: "Dashboard",  role: "ADMIN" },
+  { href: "/user", label: "Dashboard",  role: "USER" },
 ]
 
 export default function Nav ()

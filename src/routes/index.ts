@@ -1,12 +1,14 @@
 import { createBrowserRouter } from "react-router";
 import App from "../App";
-import AdminLayouts from "../layouts/AdminLayouts";
+import DashboardLayout from "../layouts/AdminLayouts";
 import ABoutPage from "../pages/about/Page";
-import AnalyticsPage from "../pages/analytics/page";
 import LoginPage from "../pages/login/page";
 import NotFoundPage from "../pages/notFound/page";
 import RegisterPage from "../pages/register/page";
 import VerifyPage from "../pages/verify/page";
+import { generateRoutes } from "../utils/genrateRoutes";
+import { adminSidebarItem } from "./adminSidebarItems";
+import { userSidebarItem } from "./userSidebarItems";
 
 export const appRouter = createBrowserRouter( [
     {
@@ -20,13 +22,17 @@ export const appRouter = createBrowserRouter( [
         ]
     },
     {
-        Component: AdminLayouts,
+        Component: DashboardLayout,
         path: "/admin",
         children: [
-            {
-                Component: AnalyticsPage,
-                path: '/admin/analytics'
-            }
+            ...generateRoutes(adminSidebarItem)
+        ]
+    },
+    {
+        Component: DashboardLayout,
+        path: "/user",
+        children: [
+            ...generateRoutes(userSidebarItem)
         ]
     },
     {

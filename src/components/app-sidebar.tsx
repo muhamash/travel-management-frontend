@@ -15,42 +15,14 @@ import
   } from "@/components/ui/sidebar"
 import { Link } from "react-router"
 import NavIcon from "../assets/icons/NavIcon"
+import { getSidebarItems } from "../utils/getSidebarItems"
 
 // This is sample data.
 const data = {
-  versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
-  navMain: [
-    {
-      title: "Getting Started",
-      url: "#",
-      items: [
-        {
-          title: "Analytics",
-          url: "/admin/analytics",
-        },
-        {
-          title: "Project Structure",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Manage travels",
-      url: "#",
-      items: [
-        {
-          title: "Routing",
-          url: "#",
-        },
-        {
-          title: "Examples",
-          url: "#",
-        },
-      ],
-    },
-    
-  ],
+  navMain: getSidebarItems("SUPER_ADMIN")
 }
+
+console.log( data.navMain );
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
