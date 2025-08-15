@@ -14,6 +14,8 @@ import
   } from "@/components/ui/popover"
 import { Link } from "react-router"
 import Logo from "../../assets/icons/NavIcon"
+import { authApi, useLogoutMutation, useUserDataQuery } from "../../redux/features/api/auth/auth.api"
+import { useAppDispatch } from "../../redux/hooks"
 import { ModeToggle } from "./ThemeToggler"
 
 // Navigation links array to be used in both desktop and mobile menus
@@ -22,7 +24,24 @@ const navigationLinks = [
   { href: "/about", label: "About" },
 ]
 
-export default function Nav() {
+export default function Nav ()
+{
+  
+  const { data, isLoading, error } = useUserDataQuery(undefined);
+  console.log( data, isLoading, error );
+
+  const [ logout ] = useLogoutMutation();
+  const dispatch = useAppDispatch();
+
+  const handleLogout = async() =>
+  {
+    await logout( undefined );
+    dispatch(authApi.util.resetApiState());
+    console.log(data)
+
+  }
+
+  
   return (
     <header className="border-b bg-ring">
       <div className="container mx-auto flex h-16 items-center justify-between gap-4 px-2">
@@ -109,7 +128,13 @@ export default function Nav() {
         <div className="flex items-center gap-2">
           <ModeToggle/>
           <Button asChild variant="ghost" size="sm" className="text-sm text-muted-foreground">
-            <Link to={"/login"}>Login</Link>
+            {
+              data ? (
+              <Link onClick={handleLogout}>Logout</Link>
+              ): (
+                <Link to={"/login"}>Login</Link>
+              )
+            }
           </Button>
           <Button asChild size="sm" className="text-sm text-primary-foreground">
             <Link to={"/register"}>Register</Link>
