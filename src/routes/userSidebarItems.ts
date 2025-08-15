@@ -10,7 +10,7 @@ export const userSidebarItem = [
             {
                 title: "Analytics",
                 url: "/user/analytics",
-                component: AnalyticsPage,
+                Component: AnalyticsPage,
             },
         ],
     },
@@ -21,12 +21,12 @@ export const userSidebarItem = [
             {
                 title: "Book a travel slot",
                 url: "/user/booking",
-                component: BookingPage
+                Component: BookingPage
             },
             {
                 title: "See booking details",
                 url: "/user/booking-details",
-                component: BookingDetailsPage
+                Component: BookingDetailsPage
             },
         ],
     },

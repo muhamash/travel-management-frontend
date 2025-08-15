@@ -19,7 +19,7 @@ import { getSidebarItems } from "../utils/getSidebarItems"
 
 // This is sample data.
 const data = {
-  navMain: getSidebarItems("SUPER_ADMIN")
+  navMain: getSidebarItems("USER")
 }
 
 console.log( data.navMain );
