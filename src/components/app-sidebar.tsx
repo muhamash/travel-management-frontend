@@ -13,7 +13,7 @@ import
     SidebarMenuItem,
     SidebarRail,
   } from "@/components/ui/sidebar"
-import { Link } from "react-router"
+import { Link, useLocation } from "react-router"
 import NavIcon from "../assets/icons/NavIcon"
 import { getSidebarItems } from "../utils/getSidebarItems"
 
@@ -24,11 +24,14 @@ const data = {
 
 console.log( data.navMain );
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar ( { ...props }: React.ComponentProps<typeof Sidebar> )
+{
+  const location = useLocation();
+  console.log(location.pathname)
   return (
     <Sidebar {...props}>
       <SidebarHeader className="flex w-full flex-col bg-accent">
-        <NavIcon />
+       <Link to="/"> <NavIcon /></Link>
       </SidebarHeader>
       <SidebarContent className="bg-ring">
         {/* We create a SidebarGroup for each parent. */}
@@ -39,7 +42,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <SidebarMenu>
                 {item.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={item.isActive}>
+                    <SidebarMenuButton asChild isActive={location.pathname === item.url}>
                       <Link className="text-muted-foreground" to={item.url}>{item.title}</Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

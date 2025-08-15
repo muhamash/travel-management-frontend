@@ -36,7 +36,10 @@ export const appRouter = createBrowserRouter( [
     {
         Component: DashboardLayout,
         path: "/user",
-        children: [
+        children: [ {
+            index: true,
+            element: React.createElement( Navigate, { to: "/user/booking" } ),
+        },
             ...generateRoutes( userSidebarItem )
         ]
     },
