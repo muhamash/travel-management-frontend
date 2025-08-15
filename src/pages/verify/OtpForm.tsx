@@ -23,6 +23,10 @@ export default function OtpForm ()
     const onSubmit = async ( data: FieldValues ) =>
     {
         console.log( data );
+        if ( !data )
+        {
+            return
+        }
     }
 
     return (
@@ -35,7 +39,7 @@ export default function OtpForm ()
                         <FormItem>
                             <FormLabel>One-Time Password</FormLabel>
                             <FormControl>
-                                <InputOTP maxLength={6} {...field}>
+                                <InputOTP required maxLength={6} {...field}>
                                     <InputOTPGroup>
                                         <InputOTPSlot index={0} />
                                         <InputOTPSlot index={1} />
