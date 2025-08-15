@@ -1,5 +1,3 @@
-
-
 import AnalyticsPage from "../pages/analytics/page";
 import BookingPage from "../pages/booking/page";
 import BookingDetailsPage from "../pages/bookingDetails/page";
