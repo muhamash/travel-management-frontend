@@ -29,6 +29,7 @@ import { useRef } from "react";
 import { z } from "zod";
 import { Textarea } from "../../../components/ui/textarea";
 import { useAddDivisionMutation } from "../../../redux/features/api/tour/tour.api";
+import ImageUploader from "./ImageUploader";
 
 const divisionSchema = z.object({
   name: z
@@ -171,6 +172,8 @@ export function AddDivisionModal() {
                                     </FormItem>
                                 )}
                             />
+
+                            <ImageUploader/>
                         </div>
 
                         <DialogFooter>
