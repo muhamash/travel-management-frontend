@@ -8,17 +8,24 @@ export const tourApi = baseApi.injectEndpoints( {
                 method: "POST",
                 data: tourTypeName
             } ),
-            invalidatesTags: ["TOUR"],
+            invalidatesTags: [ "TOUR" ],
         } ),
         getTourTypes: builder.query( {
             query: () => ( {
                 url: "/tour/tour-types",
                 method: "GET"
             } ),
-            providesTags: ["TOUR"],
-            transformResponse: (response) => response.data,
+            providesTags: [ "TOUR" ],
+            transformResponse: ( response ) => response.data,
+        } ),
+        removeTourType: builder.mutation( {
+            query: ( tourTypeId: string ) => ( {
+                url: `/tour/tour-types/${ tourTypeId }`,
+                method: "DELETE",
+            } ),
+            invalidatesTags: [ "TOUR" ],
         } ),
     } )
 } );
 
-export const { useAddTourTypeMutation, useGetTourTypesQuery } = tourApi;
+export const { useAddTourTypeMutation, useGetTourTypesQuery, useRemoveTourTypeMutation } = tourApi;
