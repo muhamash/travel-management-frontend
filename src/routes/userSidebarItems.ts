@@ -1,6 +1,6 @@
 import AnalyticsPage from "../pages/analytics/page";
-import BookingPage from "../pages/booking/page";
-import BookingDetailsPage from "../pages/bookingDetails/page";
+import BookingPage from "../pages/tour/booking/page";
+import BookingDetailsPage from "../pages/tour/bookingDetails/page";
 
 export const userSidebarItem = [
     {
