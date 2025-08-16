@@ -27,7 +27,8 @@ console.log( data.navMain );
 export function AppSidebar ( { ...props }: React.ComponentProps<typeof Sidebar> )
 {
   const location = useLocation();
-  console.log(location.pathname)
+  console.log( location.pathname )
+  
   return (
     <Sidebar {...props}>
       <SidebarHeader className="flex w-full flex-col bg-accent">
