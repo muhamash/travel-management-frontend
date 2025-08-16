@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, type FieldValue, type SubmitErrorHandler } from "react-hook-form";
+import { useForm, type FieldValue, type SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import z from "zod";
 import NavIcon from "../../assets/icons/NavIcon";
@@ -42,7 +42,7 @@ export function LoginForm({
   const navigate = useNavigate();
   const { showToast } = useCustomToast();
 
-  const onSubmit: SubmitErrorHandler<FieldValue> = async ( data: z.infer<typeof loginSchema> )=>{
+  const onSubmit: SubmitHandler<FieldValue> = async ( data: z.infer<typeof loginSchema> )=>{
     console.log( data );
 
     try
