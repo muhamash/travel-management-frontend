@@ -15,18 +15,20 @@ import
   } from "@/components/ui/sidebar"
 import { Link, useLocation } from "react-router"
 import NavIcon from "../assets/icons/NavIcon"
+import { useUserDataQuery } from "../redux/features/api/auth/auth.api"
 import { getSidebarItems } from "../utils/getSidebarItems"
 
-// This is sample data.
-const data = {
-  navMain: getSidebarItems("USER")
-}
-
-console.log( data.navMain );
 
 export function AppSidebar ( { ...props }: React.ComponentProps<typeof Sidebar> )
 {
+
+  const { data: userData } = useUserDataQuery();
   const location = useLocation();
+  const data = {
+    navMain: getSidebarItems(userData?.data?.role)
+  }
+
+  console.log( data.navMain );
   console.log( location.pathname )
   
   return (

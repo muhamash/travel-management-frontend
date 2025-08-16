@@ -1,15 +1,17 @@
-import React from "react";
+import React, { lazy } from "react";
 import { createBrowserRouter, Navigate } from "react-router";
 import App from "../App";
 import DashboardLayout from "../layouts/AdminLayouts";
-import ABoutPage from "../pages/about/Page";
 import LoginPage from "../pages/login/page";
 import NotFoundPage from "../pages/notFound/page";
 import RegisterPage from "../pages/register/page";
 import VerifyPage from "../pages/verify/page";
 import { generateRoutes } from "../utils/genrateRoutes";
+import { withAuth } from "../utils/withAuth";
 import { adminSidebarItem } from "./adminSidebarItems";
 import { userSidebarItem } from "./userSidebarItems";
+
+const ABoutPage = lazy( () => import( "../pages/about/Page" ) );
 
 export const appRouter = createBrowserRouter( [
     {
@@ -17,7 +19,7 @@ export const appRouter = createBrowserRouter( [
         path: "/",
         children: [
             {
-                Component: ABoutPage,
+                Component: withAuth(ABoutPage, null),
                 path: "/about"
             }
         ]
