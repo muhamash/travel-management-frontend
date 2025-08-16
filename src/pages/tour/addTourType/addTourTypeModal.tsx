@@ -25,6 +25,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { useCustomToast } from "../../../components/layouts/MyToast";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRef } from "react";
 import { z } from "zod";
 import { useAddTourTypeMutation } from "../../../redux/features/api/tour/tour.api";
 
@@ -39,39 +40,35 @@ const tourTypeSchema = z.object({
 type TourTypeForm = z.infer<typeof tourTypeSchema>;
 
 export function AddTourTypeModal() {
-  const form = useForm<TourTypeForm>( {
-    resolver: zodResolver( tourTypeSchema ),
+  const form = useForm<TourTypeForm>({
+    resolver: zodResolver(tourTypeSchema),
     defaultValues: { name: "" },
     mode: "onChange",
-  } );
+  });
 
   const { showToast } = useCustomToast();
-  const [ addTourType ] = useAddTourTypeMutation();
+  const [addTourType] = useAddTourTypeMutation();
 
-  const onSubmit: SubmitHandler<TourTypeForm> = async ( data ) =>
-  {
-    
-    try
-    {
-      const res = await addTourType( data );
+  const closeRef = useRef<HTMLButtonElement>(null);
 
-      console.log( "Form submitted:", data, res );
+  const onSubmit: SubmitHandler<TourTypeForm> = async (data) => {
+    try {
+      const res = await addTourType(data).unwrap();
 
-      showToast( {
+      showToast({
         type: "success",
-        message: res.data?.message,
-      } );
+        message: res?.message || "Tour type created successfully!",
+      });
 
       form.reset();
-    }
-    catch ( error )
-    {
-      console.log( error )
-      
-      showToast( {
+      closeRef.current?.click(); 
+    } catch (error: unknown) {
+      console.log(error);
+
+      showToast({
         type: "error",
-        message: error.message || "Failed to create tour type!!",
-      } );
+        message: error?.data?.message || "Failed to create tour type!!",
+      });
     }
   };
 
@@ -124,12 +121,18 @@ export function AddTourTypeModal() {
                   Cancel
                 </Button>
               </DialogClose>
+
               <Button
                 type="submit"
                 disabled={!form.formState.isValid || form.formState.isSubmitting}
               >
                 {form.formState.isSubmitting ? "Saving..." : "Save changes"}
               </Button>
+
+              {/* Hidden DialogClose for programmatic close */}
+              <DialogClose asChild>
+                <button type="button" ref={closeRef} className="hidden" />
+              </DialogClose>
             </DialogFooter>
           </form>
         </Form>
