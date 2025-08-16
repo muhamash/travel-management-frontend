@@ -9,7 +9,7 @@ export const adminSidebarItem = [
             {
                 title: "Analytics",
                 url: "/admin/analytics",
-                component: AnalyticsPage,
+                Component: AnalyticsPage,
             },
         ],
     },
@@ -20,7 +20,7 @@ export const adminSidebarItem = [
             {
                 title: "Add tour",
                 url: "/admin/add-tour",
-                component: AddTourPage
+                Component: AddTourPage
             },
         ],
     },

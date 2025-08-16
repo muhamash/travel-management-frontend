@@ -5,6 +5,7 @@ import DashboardLayout from "../layouts/AdminLayouts";
 import LoginPage from "../pages/login/page";
 import NotFoundPage from "../pages/notFound/page";
 import RegisterPage from "../pages/register/page";
+import UnAuthorizedPage from "../pages/unauthorized/page";
 import VerifyPage from "../pages/verify/page";
 import { generateRoutes } from "../utils/genrateRoutes";
 import { withAuth } from "../utils/withAuth";
@@ -25,7 +26,7 @@ export const appRouter = createBrowserRouter( [
         ]
     },
     {
-        Component: DashboardLayout,
+        Component: withAuth(DashboardLayout, "ADMIN"),
         path: "/admin",
         children: [
             {
@@ -36,7 +37,7 @@ export const appRouter = createBrowserRouter( [
         ]
     },
     {
-        Component: DashboardLayout,
+        Component: withAuth(DashboardLayout, "USER"),
         path: "/user",
         children: [ {
             index: true,
@@ -56,6 +57,10 @@ export const appRouter = createBrowserRouter( [
     {
         Component: VerifyPage,
         path: "/verify",
+    },
+    {
+        Component: UnAuthorizedPage,
+        path: "/unauthorized",
     },
     {
         Component: NotFoundPage,

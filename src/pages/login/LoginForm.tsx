@@ -50,8 +50,9 @@ export function LoginForm({
       const result = await loginUser(data).unwrap();
       console.log( result, { isLoading, error } );
 
-      if ( !result?.data?.isVerified && !result?.data?.isBlocked )
+      if ( !result?.data?.user?.isVerified )
       {
+        console.log(result?.data)
         navigate("/verify")
       }
       else
