@@ -33,6 +33,7 @@ export default function AddTourType ()
     {
       const res = await deleteTypes( id );
       
+      console.log(res)
       updateToast( toastId, {
         type: "success",
         message: res.data.message

@@ -137,7 +137,7 @@ export function LoginForm({
                 )}
               />
               <Button type="submit" className="w-full cursor-pointer">
-                Register
+                Login
               </Button>
             </div>
 
