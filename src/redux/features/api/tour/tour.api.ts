@@ -25,15 +25,22 @@ export const tourApi = baseApi.injectEndpoints( {
             } ),
             invalidatesTags: [ "TOUR" ],
         } ),
-
         addDivision: builder.mutation( {
             query: ( divisionData ) => ( {
                 url: "/division/create",
                 method: "POST",
-                data:  divisionData
-            })
-        }),
+                data: divisionData
+            } )
+        } ),
+        getDivision: builder.query( {
+            query: () => ( {
+                url: "/division",
+                method: "GET"
+            } ),
+            providesTags: [ "DIVISION" ],
+            transformResponse: ( response ) => response.data,
+        } ),
     } )
 } );
 
-export const { useAddTourTypeMutation, useGetTourTypesQuery, useRemoveTourTypeMutation, useAddDivisionMutation } = tourApi;
+export const { useAddTourTypeMutation, useGetTourTypesQuery, useRemoveTourTypeMutation, useAddDivisionMutation, useGetDivisionQuery } = tourApi;
