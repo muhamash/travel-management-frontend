@@ -15,7 +15,9 @@ export default function DashboardLayout ()
         <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
-                <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 bg-accent justify-between">
+                <header className="flex h-16 shrink-0 items-center gap-2 border-b-1 border-white/20 px-4
+             bg-gradient-to-r from-indigo-500/30 via-purple-500/30 to-pink-500/30
+             backdrop-blur-md backdrop-saturate-150 shadow-lg fixed w-full ">
                     <SidebarTrigger className="-ml-1" />
                     {/* <Separator
                         orientation="vertical"
@@ -39,7 +41,7 @@ export default function DashboardLayout ()
 
                     <ModeToggle />
                 </header>
-                <div className="flex flex-1 flex-col gap-4 p-4 bg-ring ">
+                <div className="flex flex-1 flex-col gap-4 p-4 bg-ring py-10">
                     <Outlet />
                 </div>
 

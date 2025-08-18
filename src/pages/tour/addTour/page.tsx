@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { defaultTourValues, type TourFormValues } from "../../../constants/createTour";
 import { useGetDivisionQuery, useGetTourTypesQuery } from "../../../redux/features/api/tour/tour.api";
 import TourForm from "./TourForm";
@@ -16,7 +17,7 @@ export default function AddTourPage ()
 
   return (
     <div className="text-muted-foreground">
-      <p>Add Tour form</p>
+      <p className="text-2xl text-center py-10 uppercase">Add Tour form</p>
 
       <TourForm initialValues={defaultTourValues} onSubmit={handleSubmit}/>
     </div>

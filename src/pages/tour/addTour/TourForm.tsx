@@ -20,7 +20,6 @@ import { ArrayField } from './AddTourArrayField'
 import { DateField } from './DateField'
 import { TourSchema } from './tour.shcema'
 
-
 export default function TourForm ( {
   onSubmit,
   initialValues,
