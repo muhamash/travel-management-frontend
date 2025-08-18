@@ -25,7 +25,7 @@ import { useForm } from "react-hook-form";
 import { useCustomToast } from "../../../components/layouts/MyToast";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { z } from "zod";
 import { Textarea } from "../../../components/ui/textarea";
 import { useAddDivisionMutation } from "../../../redux/features/api/tour/tour.api";
@@ -61,22 +61,17 @@ export function AddDivisionModal() {
 
     const { showToast } = useCustomToast();
     const [ addDivision ] = useAddDivisionMutation();
-    const [ image, setImage ] = useState();
+    // const [ image, setImage ] = useState();
 
     const closeRef = useRef<HTMLButtonElement>( null );
-
-    const onSubmit = async ( data ) =>
+    const onSubmit = async ( data: DivisionForm ) =>
     {
         try
         {
-            const formData = new FormData();
-            formData.append( "data", JSON.stringify(data) );
-            formData.append( "file", image as File );
 
-            console.log( formData, image, data );
-            const res = await addDivision( formData ).unwrap(); 
-            console.log( res, formData, image, data );
+            const res = await addDivision( data ).unwrap();
 
+            console.log(data, res)
             showToast( {
                 type: "success",
                 message: res?.message || "Division created successfully!",
@@ -84,8 +79,8 @@ export function AddDivisionModal() {
 
             form.reset();
             closeRef.current?.click();
-            setImage( undefined );
-        } catch ( error: unknown )
+    
+        } catch ( error: never )
         {
             console.error( error );
             showToast( {
@@ -159,7 +154,22 @@ export function AddDivisionModal() {
                                 )}
                             />
 
-                            <ImageUploader onUpload={ setImage } />
+                            <FormField
+                                control={form.control}
+                                name="image"
+                                render={( { field } ) => (
+                                    <FormItem>
+                                        <FormLabel>Image</FormLabel>
+                                        <ImageUploader
+                                            onUpload={( file ) => field.onChange( file )}
+                                        />
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
+
+                            {/* <ImageUploader onUpload={setImage} /> */}
                         </div>
 
                         <DialogFooter>

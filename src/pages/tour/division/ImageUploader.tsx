@@ -1,11 +1,12 @@
-import { AlertCircleIcon, ImageIcon, UploadIcon, XIcon } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
 import { useFileUpload } from "@/hooks/use-file-upload"
+import { AlertCircleIcon, ImageIcon, UploadIcon, XIcon } from "lucide-react"
+import { useEffect } from "react"
+import { useCustomToast } from "../../../components/layouts/MyToast"
 
-export default function ImageUploader() {
+export default function ImageUploader({onUpload}) {
   const maxSizeMB = 2
-  const maxSize = maxSizeMB * 1024 * 1024 // 2MB default
+  const maxSize = maxSizeMB * 1024 * 1024
 
   const [
     { files, isDragging, errors },
@@ -22,10 +23,28 @@ export default function ImageUploader() {
     accept: "image/svg+xml,image/png,image/jpeg,image/jpg,image/gif",
     maxSize,
   })
-  const previewUrl = files[0]?.preview || null
-    const fileName = files[ 0 ]?.file.name || null
+    const previewUrl = files[ 0 ]?.preview || null;
+    const fileName = files[ 0 ]?.file.name || null;
     
-    console.log(fileName, previewUrl)
+    const { showToast } = useCustomToast();
+    
+    console.log( fileName );
+
+    useEffect( () =>
+    {
+        if ( files.length === 1 )
+        {
+            onUpload( files[ 0 ].file );
+        } else if ( files.length > 1 )
+        {
+            onUpload( null );
+            showToast( { type: "info", message: "Single image expected only!" } );
+        } else
+        {
+            onUpload( null );
+        }
+    }, [ files ] );
+
 
     return (
         <div className="flex flex-col gap-2">
@@ -65,6 +84,7 @@ export default function ImageUploader() {
                                 SVG, PNG, JPG or GIF (max. {maxSizeMB}MB)
                             </p>
                             <Button
+                                type="button"
                                 variant="outline"
                                 className="mt-4"
                                 onClick={openFileDialog}
