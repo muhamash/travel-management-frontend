@@ -25,7 +25,7 @@ import { useForm } from "react-hook-form";
 import { useCustomToast } from "../../../components/layouts/MyToast";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { z } from "zod";
 import { Textarea } from "../../../components/ui/textarea";
 import { useAddDivisionMutation } from "../../../redux/features/api/tour/tour.api";
@@ -42,8 +42,8 @@ const divisionSchema = z.object( {
         .trim()
         .min( 1, "Division description is required" )
         .max( 50, "Must be at most 50 characters" ),
-    image: z
-        .instanceof( File, { message: "Image is required" } ), 
+    // thumbnail: z
+    //     .instanceof( File, { message: "thumbnail is required" } ), 
 } );
 
 type DivisionForm = z.infer<typeof divisionSchema>;
@@ -54,25 +54,44 @@ export function AddDivisionModal() {
         defaultValues: {
             name: "",
             description: "",
-            image: undefined,
+            // thumbnail: undefined,
         },
         mode: "onChange",
     } );
 
-    const { showToast } = useCustomToast();
+    const { showToast, updateToast } = useCustomToast();
     const [ addDivision ] = useAddDivisionMutation();
-    // const [ image, setImage ] = useState();
+    const [ thumbnail, setThumbnail ] = useState();
 
     const closeRef = useRef<HTMLButtonElement>( null );
     const onSubmit = async ( data: DivisionForm ) =>
     {
         try
         {
+            if ( !thumbnail )
+            {
+                showToast( {
+                    type: "error",
+                    message: "I wanted an image!",
+                } );
 
-            const res = await addDivision( data ).unwrap();
+                return;
+            }
 
-            console.log(data, res)
-            showToast( {
+            const toastId = showToast( {
+                type: "loading",
+                message: "Attempting to creating the division!!",
+                autoClose: false
+            })
+
+            const formData = new FormData();
+            formData.append( "data", JSON.stringify(data) );
+            formData.append( "file", thumbnail );
+
+            const res = await addDivision( formData ).unwrap();
+
+            console.log(data, res, formData)
+            updateToast(toastId, {
                 type: "success",
                 message: res?.message || "Division created successfully!",
             } );
@@ -80,7 +99,8 @@ export function AddDivisionModal() {
             form.reset();
             closeRef.current?.click();
     
-        } catch ( error: never )
+        }
+        catch ( error: never )
         {
             console.error( error );
             showToast( {
@@ -154,22 +174,22 @@ export function AddDivisionModal() {
                                 )}
                             />
 
-                            <FormField
+                            {/* <FormField
                                 control={form.control}
-                                name="image"
+                                name="thumbnail"
                                 render={( { field } ) => (
                                     <FormItem>
-                                        <FormLabel>Image</FormLabel>
+                                        <FormLabel>thumbnail</FormLabel>
                                         <ImageUploader
                                             onUpload={( file ) => field.onChange( file )}
                                         />
                                         <FormMessage />
                                     </FormItem>
                                 )}
-                            />
+                            /> */}
 
 
-                            {/* <ImageUploader onUpload={setImage} /> */}
+                            <ImageUploader onUpload={setThumbnail} />
                         </div>
 
                         <DialogFooter>
