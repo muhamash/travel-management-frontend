@@ -21,33 +21,30 @@ import
         FormMessage,
     } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useCustomToast } from "../../../components/layouts/MyToast";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { z } from "zod";
 import { Textarea } from "../../../components/ui/textarea";
 import { useAddDivisionMutation } from "../../../redux/features/api/tour/tour.api";
 import ImageUploader from "./ImageUploader";
 
-const divisionSchema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(1, "division type name is required")
+const divisionSchema = z.object( {
+    name: z
+        .string()
+        .trim()
+        .min( 1, "Division name is required" )
         .max( 50, "Must be at most 50 characters" ),
-    thumbnail: z
-    .string()
-    .trim()
-    .min(1, "division type name is required")
-    .max(500, "Must be at most 50 characters"),
     description: z
-    .string()
-    .trim()
-    .min(1, "division type name is required")
-    .max(50, "Must be at most 50 characters"),
-});
+        .string()
+        .trim()
+        .min( 1, "Division description is required" )
+        .max( 50, "Must be at most 50 characters" ),
+    image: z
+        .instanceof( File, { message: "Image is required" } ), 
+} );
 
 type DivisionForm = z.infer<typeof divisionSchema>;
 
@@ -56,37 +53,47 @@ export function AddDivisionModal() {
         resolver: zodResolver( divisionSchema ),
         defaultValues: {
             name: "",
-            thumbnail: "",
-            description: ""
+            description: "",
+            image: undefined,
         },
         mode: "onChange",
     } );
 
-  const { showToast } = useCustomToast();
-  const [addDivision] = useAddDivisionMutation();
+    const { showToast } = useCustomToast();
+    const [ addDivision ] = useAddDivisionMutation();
+    const [ image, setImage ] = useState();
 
-  const closeRef = useRef<HTMLButtonElement>(null);
+    const closeRef = useRef<HTMLButtonElement>( null );
 
-  const onSubmit: SubmitHandler<DivisionForm> = async (data) => {
-    try {
-      const res = await addDivision(data).unwrap();
+    const onSubmit = async ( data ) =>
+    {
+        try
+        {
+            const formData = new FormData();
+            formData.append( "data", JSON.stringify(data) );
+            formData.append( "file", image as File );
 
-      showToast({
-        type: "success",
-        message: res?.message || "division type created successfully!",
-      });
+            console.log( formData, image, data );
+            const res = await addDivision( formData ).unwrap(); 
+            console.log( res, formData, image, data );
 
-      form.reset();
-      closeRef.current?.click(); 
-    } catch (error: unknown) {
-      console.log(error);
+            showToast( {
+                type: "success",
+                message: res?.message || "Division created successfully!",
+            } );
 
-      showToast({
-        type: "error",
-        message: error?.data?.message || "Failed to create division type!!",
-      });
-    }
-  };
+            form.reset();
+            closeRef.current?.click();
+            setImage( undefined );
+        } catch ( error: unknown )
+        {
+            console.error( error );
+            showToast( {
+                type: "error",
+                message: error?.data?.message || "Failed to create division!",
+            } );
+        }
+    };
 
     return (
         <Dialog>
@@ -131,27 +138,6 @@ export function AddDivisionModal() {
                             />
                             <FormField
                                 control={form.control}
-                                name="thumbnail"
-                                render={( { field } ) => (
-                                    <FormItem>
-                                        <FormLabel>Division thumbnail enter link or manually upload an image</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                placeholder=""
-                                                {...field}
-                                                type="text"
-                                                aria-invalid={!!form.formState.errors.name}
-                                            />
-                                        </FormControl>
-                                        <FormDescription className="sr-only">
-                                            This is your public display thumbnail.
-                                        </FormDescription>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
                                 name="description"
                                 render={( { field } ) => (
                                     <FormItem>
@@ -173,7 +159,7 @@ export function AddDivisionModal() {
                                 )}
                             />
 
-                            <ImageUploader/>
+                            <ImageUploader onUpload={ setImage } />
                         </div>
 
                         <DialogFooter>
