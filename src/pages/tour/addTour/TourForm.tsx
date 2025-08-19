@@ -346,7 +346,7 @@ export default function TourForm ( {
                         <Button type="button" variant="outline" onClick={() => form.reset()}>
                             Reset
                         </Button>
-                        <Button type="submit" className="">Create Tour</Button>
+                        <Button type="submit" disable={!form.formState.isValid || form.formState.isSubmitting} className={`${form.formState.isValid || !form.formState.isSubmitting ? "cursor-pointer" : "cursor-progress"}`}>{ form.formState.isSubmitting ? "Working.." : "Create"}</Button>
                     </div>
                 </div>
             </form>

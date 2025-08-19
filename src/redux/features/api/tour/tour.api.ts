@@ -30,17 +30,26 @@ export const tourApi = baseApi.injectEndpoints( {
                 url: "/division/create",
                 method: "POST",
                 data: divisionData
-            } )
+            } ),
+            providesTags: ["DIVISION"]
         } ),
         getDivision: builder.query( {
             query: () => ( {
                 url: "/division",
                 method: "GET"
             } ),
-            providesTags: [ "DIVISION" ],
             transformResponse: ( response ) => response.data,
         } ),
+
+        addTour: builder.mutation( {
+            query: ( tourData ) => ( {
+                url: '/tour/create-tour',
+                method: "POST",
+                data: tourData
+            } ),
+            providesTags:["TOUR"]
+        })
     } )
 } );
 
-export const { useAddTourTypeMutation, useGetTourTypesQuery, useRemoveTourTypeMutation, useAddDivisionMutation, useGetDivisionQuery } = tourApi;
+export const { useAddTourTypeMutation, useGetTourTypesQuery, useRemoveTourTypeMutation, useAddDivisionMutation, useGetDivisionQuery, useAddTourMutation } = tourApi;
