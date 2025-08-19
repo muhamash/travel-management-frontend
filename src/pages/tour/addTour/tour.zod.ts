@@ -24,6 +24,8 @@ export const TourSchema = z
             .number( { invalid_type_error: 'Minimum age must be a number' } )
             .int( 'Must be an integer' )
             .nonnegative( 'Cannot be negative' ),
+        division: z.string( "Must be string" ),
+        tourTypes: z.string("must include string tour types")
     } )
     .refine( ( data ) => data.endDate >= data.startDate, {
         message: 'End date cannot be before start date',

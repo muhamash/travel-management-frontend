@@ -16,4 +16,6 @@ export const defaultTourValues: TourFormValues = {
     tourPlan: [ 'Day 1: Arrival', 'Day 2: Beach', 'Day 3: Departure' ],
     maxGuest: 20,
     minAge: 12,
+    division: "",
+    tourTypes: ""
 };

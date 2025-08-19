@@ -13,32 +13,38 @@ import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { Textarea } from '@/components/ui/textarea'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { SelectContent } from '@radix-ui/react-select'
 import { useMemo } from 'react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
+import { Select, SelectItem, SelectTrigger, SelectValue } from '../../../components/ui/select'
 import { defaultTourValues, type TourFormValues } from '../../../constants/createTour'
 import { ArrayField } from './AddTourArrayField'
 import { DateField } from './DateField'
 import { TourSchema } from './tour.zod'
 
 export default function TourForm ( {
-  onSubmit,
-  initialValues,
+    onSubmit,
+    initialValues,
+    selectorData
 }: {
   onSubmit?: (values: TourFormValues) => void | Promise<void>
   initialValues?: Partial<TourSchema>
 }) {
-  const form = useForm<TourFormValues>({
-    resolver: zodResolver(TourSchema),
-    defaultValues: useMemo(() => ({ ...defaultTourValues, ...initialValues }), [initialValues]),
-    mode: 'onBlur',
-  })
+    const form = useForm<TourFormValues>( {
+        resolver: zodResolver( TourSchema ),
+        defaultValues: useMemo( () => ( { ...defaultTourValues, ...initialValues } ), [ initialValues ] ),
+        mode: 'onBlur',
+    } );
 
-  const handleSubmit: SubmitHandler<TourFormValues> = async (values) => {
+    // console.log( selectorData );
 
-    await onSubmit?.(values)
+    const handleSubmit: SubmitHandler<TourFormValues> = async ( values ) =>
+    {
 
-    if (!onSubmit) console.log('Submitting tour payload:', values)
-  }
+        await onSubmit?.( values )
+
+        if ( !onSubmit ) console.log( 'Submitting tour payload:', values )
+    };
 
     return (
         <Form {...form}>
@@ -78,6 +84,87 @@ export default function TourForm ( {
                                 )}
                             />
 
+                            <div className="flex flex-wrap justify-between items-center gap-4">
+
+                                {/* select for division */}
+                                <FormField
+                                    control={form.control}
+                                    name="division"
+                                    render={( { field } ) => (
+                                        <FormItem>
+                                            <FormLabel>Select divisions</FormLabel>
+                                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                <FormControl>
+                                                    <SelectTrigger className='w-full'>
+                                                        <SelectValue placeholder="Select a verified division" />
+                                                    </SelectTrigger>
+                                                </FormControl>
+                                                <SelectContent
+                                                    className="
+                                                    w-[var(--radix-select-trigger-width)]  
+                                                    max-h-60 overflow-y-auto               
+                                                    border-white/20 p-2
+                                                    bg-gradient-to-r from-indigo-500/30 via-purple-500/30 to-pink-500/30
+                                                    backdrop-blur-md backdrop-saturate-150 shadow-lg rounded-md
+"
+                                                >
+                                                    {selectorData?.divisionDataLoading ? (
+                                                        <SelectItem value="loading" disabled>Loading...</SelectItem>
+                                                    ) : (
+                                                        selectorData?.divisionData?.map( ( division ) => (
+                                                            <SelectItem key={division.id} value={division.id}>
+                                                                {division.name}
+                                                            </SelectItem>
+                                                        ) )
+                                                    )}
+                                                </SelectContent>
+
+                                            </Select>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+
+                                {/* select for tour types */}
+                                <FormField
+                                    control={form.control}
+                                    name="tourTypes"
+                                    render={( { field } ) => (
+                                        <FormItem>
+                                            <FormLabel>Select tour types</FormLabel>
+                                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                <FormControl>
+                                                    <SelectTrigger className='w-full'>
+                                                        <SelectValue placeholder="Select a verified tour types" />
+                                                    </SelectTrigger>
+                                                </FormControl>
+                                                <SelectContent
+                                                    className="
+                                                    w-[var(--radix-select-trigger-width)]  
+                                                    max-h-60 overflow-y-auto               
+                                                    border-white/20 p-2
+                                                    bg-gradient-to-r from-indigo-500/30 via-purple-500/30 to-pink-500/30
+                                                    backdrop-blur-md backdrop-saturate-150 shadow-lg rounded-md
+"
+                                                >
+                                                    {selectorData?.tourTypesLoading ? (
+                                                        <SelectItem value="loading" disabled>Loading...</SelectItem>
+                                                    ) : (
+                                                        selectorData?.tourTypes?.map( ( type ) => (
+                                                            <SelectItem key={type.id} value={type.id}>
+                                                                {type.name}
+                                                            </SelectItem>
+                                                        ) )
+                                                    )}
+                                                </SelectContent>
+
+                                            </Select>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+
                             <FormField
                                 control={form.control}
                                 name="location"
@@ -111,7 +198,7 @@ export default function TourForm ( {
                                 )}
                             />
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="flex flex-wrap justify-between items-center gap-4">
                                 <FormField
                                     control={form.control}
                                     name="startDate"

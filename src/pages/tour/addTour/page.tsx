@@ -6,9 +6,14 @@ import TourForm from "./TourForm";
 export default function AddTourPage ()
 {
   const {  data: divisionData, isLoading: divisionDataLoading } = useGetDivisionQuery();
-  const {  data: tourTypes,  isLoading: tourTypesLoading } = useGetTourTypesQuery();
-
-  console.log( divisionData, tourTypes );
+  const { data: tourTypes, isLoading: tourTypesLoading } = useGetTourTypesQuery();
+  
+  const selectorData = {
+    divisionData,
+    divisionDataLoading,
+    tourTypes,
+    tourTypesLoading
+  }
   
   const handleSubmit = async ( data: TourFormValues ) =>
   {
@@ -19,7 +24,7 @@ export default function AddTourPage ()
     <div className="text-muted-foreground">
       <p className="text-2xl text-center py-10 uppercase">Add Tour form</p>
 
-      <TourForm initialValues={defaultTourValues} onSubmit={handleSubmit}/>
+      <TourForm selectorData={selectorData} initialValues={defaultTourValues} onSubmit={handleSubmit}/>
     </div>
   )
 }
