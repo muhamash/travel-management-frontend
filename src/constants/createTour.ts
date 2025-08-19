@@ -1,4 +1,4 @@
-import type { TourSchema } from "../pages/tour/addTour/tour.shcema";
+import type { TourSchema } from "../pages/tour/addTour/tour.zod";
 
 export type TourFormValues = z.infer<typeof TourSchema>
 
