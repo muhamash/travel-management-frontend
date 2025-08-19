@@ -18,6 +18,7 @@ import { useMemo } from 'react'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 import { Select, SelectItem, SelectTrigger, SelectValue } from '../../../components/ui/select'
 import { defaultTourValues, type TourFormValues } from '../../../constants/createTour'
+import ImageUploader from '../division/ImageUploader'
 import { ArrayField } from './AddTourArrayField'
 import { DateField } from './DateField'
 import { TourSchema } from './tour.zod'
@@ -25,7 +26,8 @@ import { TourSchema } from './tour.zod'
 export default function TourForm ( {
     onSubmit,
     initialValues,
-    selectorData
+    selectorData,
+    setThumbnails
 }: {
   onSubmit?: (values: TourFormValues) => void | Promise<void>
   initialValues?: Partial<TourSchema>
@@ -36,7 +38,7 @@ export default function TourForm ( {
         mode: 'onBlur',
     } );
 
-    // console.log( selectorData );
+    console.log(form.formState.isSubmitting)
 
     const handleSubmit: SubmitHandler<TourFormValues> = async ( values ) =>
     {
@@ -45,6 +47,7 @@ export default function TourForm ( {
 
         if ( !onSubmit ) console.log( 'Submitting tour payload:', values )
     };
+
 
     return (
         <Form {...form}>
@@ -289,13 +292,14 @@ export default function TourForm ( {
                             <CardTitle>Media</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
-                            <ArrayField
+                            {/* <ArrayField
                                 name="images"
                                 control={form.control}
                                 label="Image URLs"
                                 placeholder="https://..."
                                 buttonLabel="Add URL"
-                            />
+                            /> */}
+                            <ImageUploader multiple onUpload={( prev ) => setThumbnails( prev )} />
                         </CardContent>
                     </Card>
 
@@ -346,7 +350,14 @@ export default function TourForm ( {
                         <Button type="button" variant="outline" onClick={() => form.reset()}>
                             Reset
                         </Button>
-                        <Button type="submit" disable={!form.formState.isValid || form.formState.isSubmitting} className={`${form.formState.isValid || !form.formState.isSubmitting ? "cursor-pointer" : "cursor-progress"}`}>{ form.formState.isSubmitting ? "Working.." : "Create"}</Button>
+                        <Button
+                            type="submit"
+                            disabled={!form.formState.isValid || form.formState.isSubmitting}
+                            className={`${ form.formState.isSubmitting ? "cursor-progress" : "cursor-pointer" }`}
+                        >
+                            {form.formState.isSubmitting ? "Working.." : "Create"}
+                        </Button>
+
                     </div>
                 </div>
             </form>

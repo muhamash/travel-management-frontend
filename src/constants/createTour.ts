@@ -5,7 +5,7 @@ export type TourFormValues = z.infer<typeof TourSchema>
 export const defaultTourValues: TourFormValues = {
     title: 'thakurgaon tour',
     description: 'Enjoy.',
-    images: [ 'https://example.com/beach.jpg' ],
+    // images: [ 'https://example.com/beach.jpg' ],
     location: "Cox's dazar",
     costFrom: 6500,
     startDate: new Date( '2025-08-01T00:00:00' ),

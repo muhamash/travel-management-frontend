@@ -4,7 +4,7 @@ export const TourSchema = z
     .object( {
         title: z.string().min( 3, 'Title is too short' ),
         description: z.string().min( 3, 'Please add a short description' ),
-        images: z.array( z.string().url( 'Must be a valid URL' ) ).min( 1, 'Add at least one image' ),
+        // images: z.array( z.string().url( 'Must be a valid URL' ) ).min( 1, 'Add at least one image' ).optional(),
         location: z.string().min( 2, 'Location is required' ),
         costFrom: z
             .number( { invalid_type_error: 'Cost must be a number' } )

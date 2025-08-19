@@ -1,4 +1,6 @@
  
+ 
+import { useState } from "react";
 import { useCustomToast } from "../../../components/layouts/MyToast";
 import { defaultTourValues, type TourFormValues } from "../../../constants/createTour";
 import { useAddTourMutation, useGetDivisionQuery, useGetTourTypesQuery } from "../../../redux/features/api/tour/tour.api";
@@ -11,6 +13,7 @@ export default function AddTourPage ()
 
   const [ addTour ] = useAddTourMutation();
   const { showToast, updateToast } = useCustomToast();
+  const [ thumbnails, setThumbnails ] = useState( [] );
   
   const selectorData = {
     divisionData,
@@ -21,24 +24,30 @@ export default function AddTourPage ()
   
   const handleSubmit = async ( data: TourFormValues ) =>
   {
-    console.log( data );
-    const toastId = showToast( {
-      message: "Trying to create a tour!",
-      type: "info"
-    } );
+    const toastId = showToast( { message: "Trying to create a tour!", type: "loading", autoClose: false } );
 
-    try 
+    try
     {
-      const res = await addTour(data).unwrap();
-      console.log( res );
+      const formData = new FormData();
+      formData.append( "data", JSON.stringify( data ) );
 
-
-      updateToast( toastId, {
-        message: res?.message,
-        type: "success"
+      thumbnails.forEach( ( file: File ) =>
+      {
+        formData.append( "files", file );
       } );
-    }
-    catch ( error )
+
+      // const res = await axios.post( "http://localhost:3000/api/v1/tour/create-tour", formData, {
+      //   headers: { "Content-Type": "multipart/form-data" },
+      //   withCredentials: true
+      // } );
+
+      const res = await addTour( formData ).unwrap();
+
+      console.log(res)
+
+      updateToast( toastId, { message: res?.message, type: "success" } );
+      console.log( res.data );
+    } catch ( error )
     {
       console.log( error );
       updateToast( toastId, {
@@ -46,14 +55,13 @@ export default function AddTourPage ()
         type: "error"
       } );
     }
-
-  }
+  };
 
   return (
     <div className="text-muted-foreground">
       <p className="text-2xl text-center py-10 uppercase">Add Tour form</p>
 
-      <TourForm selectorData={selectorData} initialValues={defaultTourValues} onSubmit={handleSubmit}/>
+      <TourForm selectorData={selectorData} initialValues={defaultTourValues} onSubmit={handleSubmit} setThumbnails={ setThumbnails } />
     </div>
   )
 }
