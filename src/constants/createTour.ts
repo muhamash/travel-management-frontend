@@ -17,5 +17,5 @@ export const defaultTourValues: TourFormValues = {
     maxGuest: 20,
     minAge: 12,
     division: "",
-    tourTypes: ""
+    tourType: ""
 };

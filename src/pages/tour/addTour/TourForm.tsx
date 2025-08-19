@@ -84,6 +84,7 @@ export default function TourForm ( {
                                 )}
                             />
 
+                            {/* selector */}
                             <div className="flex flex-wrap justify-between items-center gap-4">
 
                                 {/* select for division */}
@@ -128,7 +129,7 @@ export default function TourForm ( {
                                 {/* select for tour types */}
                                 <FormField
                                     control={form.control}
-                                    name="tourTypes"
+                                    name="tourType"
                                     render={( { field } ) => (
                                         <FormItem>
                                             <FormLabel>Select tour types</FormLabel>
